@@ -238,3 +238,46 @@ export function IconBook({ className }: P) {
     </svg>
   );
 }
+
+export function IconDownload({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 3.5v11" />
+      <path d="M7.5 10.5 12 15l4.5-4.5" />
+      <path d="M4.5 19.5h15" />
+    </svg>
+  );
+}
+
+export function IconCpu({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <rect x="5.5" y="5.5" width="13" height="13" rx="2" />
+      <rect x="9.75" y="9.75" width="4.5" height="4.5" />
+      <path d="M9 2.5v3M15 2.5v3M9 18.5v3M15 18.5v3" />
+      <path d="M2.5 9h3M2.5 15h3M18.5 9h3M18.5 15h3" />
+    </svg>
+  );
+}
+
+export function IconGpu({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <rect x="3" y="6.5" width="18" height="10.5" rx="1.6" />
+      <circle cx="8.8" cy="11.75" r="2.5" />
+      <circle cx="8.8" cy="11.75" r="0.8" fill="currentColor" stroke="none" />
+      <path d="M14.5 9.5h4M14.5 12h4M14.5 14.5h2.5" />
+      <path d="M6 17v2.5M10 17v2.5M14 17v2.5M18 17v2.5" />
+    </svg>
+  );
+}
+
+export function IconAlert({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 4 21 19.5H3Z" />
+      <path d="M12 10.2v4" />
+      <circle cx="12" cy="16.8" r="0.9" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}

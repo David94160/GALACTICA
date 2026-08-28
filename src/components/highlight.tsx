@@ -52,6 +52,35 @@ export function highlightPython(code: string): ReactNode[] {
   return out;
 }
 
+const BASH_RE =
+  /(#[^\n]*)|("(?:[^"\\]|\\.)*"|'[^']*')|([A-Z][A-Z0-9_]{2,}(?==))|\b(git|brew|curl|bash|hf|pip|install|clone|download|xet)\b/g;
+
+/** Shell snippet highlighter (comments, strings, env vars, commands). */
+export function highlightBash(code: string): ReactNode[] {
+  const out: ReactNode[] = [];
+  let last = 0;
+  let m: RegExpExecArray | null;
+  let k = 0;
+  BASH_RE.lastIndex = 0;
+  while ((m = BASH_RE.exec(code)) !== null) {
+    if (m.index > last) out.push(code.slice(last, m.index));
+    let cls = "";
+    if (m[1]) cls = "c-com";
+    else if (m[2]) cls = "c-str";
+    else if (m[3]) cls = "c-num";
+    else if (m[4]) cls = "c-kw";
+    out.push(
+      <span key={k++} className={cls}>
+        {m[0]}
+      </span>
+    );
+    last = m.index + m[0].length;
+    if (m[0].length === 0) BASH_RE.lastIndex++;
+  }
+  if (last < code.length) out.push(code.slice(last));
+  return out;
+}
+
 const BIB_RE = /(@[a-zA-Z]+)|([a-zA-Z][\w-]*(?=\s*=))|("[^"]*")|([{}[\],=#])/g;
 
 export function highlightBib(code: string): ReactNode[] {

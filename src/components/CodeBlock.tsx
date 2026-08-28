@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { highlightBib, highlightPython, highlightTokens } from "./highlight";
+import { highlightBash, highlightBib, highlightPython, highlightTokens } from "./highlight";
 import { IconCheck, IconCopy } from "./Icons";
 
 export function CopyButton({ text, small }: { text: string; small?: boolean }) {
@@ -43,12 +43,18 @@ export default function CodeBlock({
   maxHeight = "max-h-[440px]",
 }: {
   code: string;
-  lang?: "python" | "bib" | "text";
+  lang?: "python" | "bib" | "text" | "bash";
   file?: string;
   maxHeight?: string;
 }) {
   const body =
-    lang === "python" ? highlightPython(code) : lang === "bib" ? highlightBib(code) : highlightTokens(code, "chip");
+    lang === "python"
+      ? highlightPython(code)
+      : lang === "bib"
+        ? highlightBib(code)
+        : lang === "bash"
+          ? highlightBash(code)
+          : highlightTokens(code, "chip");
 
   return (
     <div className="overflow-hidden rounded-lg border border-ink-700 bg-ink-900/90 shadow-[0_18px_50px_-24px_rgba(0,0,0,0.8)] transition-colors duration-300 hover:border-ink-600">

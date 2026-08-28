@@ -1,11 +1,12 @@
-import { useEffect, useState, type ComponentType, type CSSProperties } from "react";
+import { useEffect, useState, type ComponentType, type CSSProperties, type ReactNode } from "react";
 import Reveal from "./components/Reveal";
 import Playground from "./components/Playground";
 import CodeBlock, { CopyButton } from "./components/CodeBlock";
 import ModelScale from "./components/ModelScale";
 import { highlightTokens } from "./components/highlight";
-import { BIBTEX, EXAMPLES, METRICS, QUICKSTART } from "./data/examples";
+import { BIBTEX, DEPLOY_VARIANTS, DOWNLOADS, EXAMPLES, METRICS, QUICKSTART, WIDGET_PROMPTS } from "./data/examples";
 import {
+  IconAlert,
   IconArrowUpRight,
   IconAtom,
   IconBook,
@@ -13,9 +14,12 @@ import {
   IconBubble,
   IconCode,
   IconCompress,
+  IconCpu,
+  IconDownload,
   IconFace,
   IconFlask,
   IconGem,
+  IconGpu,
   IconHelix,
   IconIBeam,
   IconMolecule,
@@ -47,7 +51,9 @@ const NAV = [
   { id: "install", label: "Install" },
   { id: "models", label: "Models" },
   { id: "quickstart", label: "Quickstart" },
+  { id: "deploy", label: "Deploy" },
   { id: "capabilities", label: "Capabilities" },
+  { id: "card", label: "Model card" },
   { id: "citation", label: "Citation" },
 ];
 
@@ -112,11 +118,44 @@ function OutputPanel({ text, token }: { text: string; token: string }) {
   );
 }
 
+function CardBlock({
+  icon: Icon,
+  tone,
+  title,
+  children,
+}: {
+  icon: IconT;
+  tone: "mint" | "sky" | "ember" | "viol";
+  title: string;
+  children: ReactNode;
+}) {
+  const tones: Record<string, string> = {
+    mint: "border-mint-400/30 bg-mint-400/10 text-mint-400",
+    sky: "border-skyx-400/30 bg-skyx-400/10 text-skyx-400",
+    ember: "border-ember-400/30 bg-ember-400/10 text-ember-400",
+    viol: "border-viol-400/30 bg-viol-400/10 text-viol-400",
+  };
+  return (
+    <article className="group rounded-xl border border-ink-700 bg-ink-900/70 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-ink-500 hover:bg-ink-850/80 hover:shadow-[0_20px_48px_-24px_rgba(0,0,0,0.8)]">
+      <div className="flex items-center gap-3">
+        <span className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg border transition-transform duration-300 group-hover:scale-105 ${tones[tone]}`}>
+          <Icon className="h-5 w-5" />
+        </span>
+        <h3 className="font-display text-base font-semibold tracking-tight text-ink-100">{title}</h3>
+      </div>
+      <div className="mt-3.5 text-sm leading-relaxed text-ink-300">{children}</div>
+    </article>
+  );
+}
+
 export default function App() {
   const [sec, setSec] = useState("");
   const [qs, setQs] = useState(0);
   const [cap, setCap] = useState(EXAMPLES[0].id);
   const [pg, setPg] = useState("latex");
+  const [deploy, setDeploy] = useState("gpu");
+
+  const activeDeploy = DEPLOY_VARIANTS.find((v) => v.id === deploy) ?? DEPLOY_VARIANTS[1];
 
   useEffect(() => {
     const onScroll = () => {
@@ -335,7 +374,7 @@ export default function App() {
                   <IconSpark className="mt-0.5 h-4.5 w-4.5 shrink-0 text-mint-300" />
                   <p className="text-sm leading-relaxed text-ink-300">
                     <span className="font-semibold text-mint-300">Heads-up:</span> Galactica is a base LM, not a chat
-                    model. There is no system prompt to set — the prompt recipes in section 04 are the interface.
+                    model. There is no system prompt to set — the prompt recipes in section 05 are the interface.
                   </p>
                 </div>
               </Reveal>
@@ -367,6 +406,48 @@ $ pip install transformers accelerate
             />
             <Reveal>
               <ModelScale />
+            </Reveal>
+
+            {/* pull the weights */}
+            <Reveal delay={120} className="mt-6">
+              <div className="rounded-xl border border-ink-700 bg-ink-900/80 p-5 sm:p-8">
+                <div className="mb-6 flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="flex items-center gap-2.5 font-display text-lg font-semibold text-ink-100">
+                    <IconDownload className="h-5 w-5 text-mint-400" />
+                    Pull the weights
+                  </h3>
+                  <p className="font-mono text-[11px] text-ink-500">
+                    three ways to get <span className="text-ink-300">facebook/galactica-6.7b</span> onto disk
+                  </p>
+                </div>
+                <div className="grid gap-4 lg:grid-cols-[1.15fr_1fr_1fr]">
+                  {DOWNLOADS.map((d, i) => (
+                    <div
+                      key={d.id}
+                      className={`group flex flex-col gap-3 rounded-lg p-1 transition-colors duration-300 ${
+                        i === 0 ? "border border-mint-500/25 bg-mint-500/[0.04] lg:-my-3 lg:py-4" : ""
+                      }`}
+                    >
+                      <div className="flex items-center justify-between px-2">
+                        <span
+                          className={`font-mono text-[11px] uppercase tracking-[0.18em] ${
+                            i === 0 ? "text-mint-300" : "text-ember-300"
+                          }`}
+                        >
+                          {d.label}
+                        </span>
+                        {i === 0 && (
+                          <span className="rounded border border-mint-500/40 bg-mint-500/10 px-1.5 py-px font-mono text-[9px] uppercase tracking-wider text-mint-300">
+                            hub recommended
+                          </span>
+                        )}
+                      </div>
+                      <CodeBlock code={d.code} lang="bash" file={d.file} maxHeight="max-h-72" />
+                      <p className="px-2 text-xs leading-relaxed text-ink-400">{d.note}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </Reveal>
           </div>
         </section>
@@ -430,11 +511,85 @@ $ pip install transformers accelerate
           </div>
         </section>
 
-        {/* ---------- 04 capabilities ---------- */}
-        <section id="capabilities" className="scroll-mt-24">
+        {/* ---------- 04 deploy ---------- */}
+        <section id="deploy" className="scroll-mt-24">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
             <SectionHead
               no="04"
+              title="Run it anywhere"
+              sub="Four runtime recipes lifted straight from the 6.7B model card — from a dependency-free CPU run to quantized inference in roughly 8 GB of VRAM."
+            />
+            <div className="grid gap-8 lg:grid-cols-[310px_1fr]">
+              <Reveal className="lg:sticky lg:top-24 lg:self-start">
+                <div className="space-y-2">
+                  {DEPLOY_VARIANTS.map((v) => {
+                    const on = deploy === v.id;
+                    return (
+                      <button
+                        key={v.id}
+                        onClick={() => setDeploy(v.id)}
+                        className={`group w-full rounded-lg border px-4 py-3.5 text-left transition-all duration-200 active:scale-[0.99] ${
+                          on
+                            ? "border-ember-400/50 bg-ink-850 shadow-[0_12px_34px_-18px_rgba(255,180,84,0.45)]"
+                            : "border-ink-700 bg-ink-900/60 hover:border-ink-500 hover:bg-ink-850/70"
+                        }`}
+                      >
+                        <span className="flex items-center justify-between gap-2">
+                          <span
+                            className={`flex items-center gap-2 font-display text-sm font-semibold ${
+                              on ? "text-ember-300" : "text-ink-100"
+                            }`}
+                          >
+                            {v.id === "cpu" ? <IconCpu className="h-4 w-4" /> : <IconGpu className="h-4 w-4" />}
+                            {v.label}
+                          </span>
+                          <span
+                            className={`rounded border px-1.5 py-px font-mono text-[10px] ${
+                              on
+                                ? "border-ember-400/40 bg-ember-400/10 text-ember-300"
+                                : "border-ink-600 text-ink-400"
+                            }`}
+                          >
+                            {v.tag}
+                          </span>
+                        </span>
+                        <span className="mt-1.5 block text-xs leading-relaxed text-ink-400">{v.blurb}</span>
+                      </button>
+                    );
+                  })}
+                </div>
+                <div
+                  className={`mt-4 rounded-lg border px-4 py-3 font-mono text-xs transition-all duration-300 ${
+                    activeDeploy.deps
+                      ? "border-mint-500/25 bg-mint-500/5 text-mint-300"
+                      : "border-ink-700 bg-ink-900/60 text-ink-500"
+                  }`}
+                >
+                  <span className={activeDeploy.deps ? "text-mint-400" : "text-ink-600"}>$</span>{" "}
+                  {activeDeploy.deps ?? "no extra packages needed"}
+                </div>
+              </Reveal>
+              <Reveal delay={100}>
+                <CodeBlock
+                  key={deploy}
+                  code={activeDeploy.code}
+                  file={`${activeDeploy.label.toLowerCase().replace(/\s+/g, "-")}.py`}
+                />
+                <p className="mt-3 font-mono text-[11px] leading-relaxed text-ink-500">
+                  <span className="text-mint-400">&gt;</span> all four paths end identically:{" "}
+                  <span className="text-ink-300">model.generate(input_ids)</span> →{" "}
+                  <span className="text-ink-300">tokenizer.decode(outputs[0])</span> — only the loading line changes.
+                </p>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------- 05 capabilities ---------- */}
+        <section id="capabilities" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+            <SectionHead
+              no="05"
               title="Capabilities"
               sub="Eleven prompt recipes from the official docs. Galactica doesn't follow instructions — it continues documents — so each capability is unlocked by a token shape."
             />
@@ -510,10 +665,161 @@ $ pip install transformers accelerate
           </div>
         </section>
 
-        {/* ---------- 05 citation ---------- */}
+        {/* ---------- 06 model card ---------- */}
+        <section id="card" className="scroll-mt-24">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+            <SectionHead
+              no="06"
+              title="The model card"
+              sub="facebook/galactica-6.7b as Meta AI filed it on the Hub — what it is, what it learned, and where it still stumbles."
+            />
+            <div className="grid gap-8 lg:grid-cols-[330px_1fr]">
+              {/* spec sheet */}
+              <Reveal className="lg:sticky lg:top-24 lg:self-start">
+                <div className="overflow-hidden rounded-xl border border-ink-700 bg-ink-900/85 shadow-[0_24px_60px_-32px_rgba(0,0,0,0.9)]">
+                  <div className="flex items-center gap-3 border-b border-ink-700 bg-ink-850 px-5 py-4">
+                    <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-ink-800 ring-1 ring-ink-600">
+                      <IconFace className="h-6 w-6 text-ember-400" />
+                    </span>
+                    <div className="min-w-0">
+                      <p className="truncate font-display text-sm font-semibold text-ink-100">facebook/galactica-6.7b</p>
+                      <p className="font-mono text-[11px] text-ink-400">Papers with Code · Meta AI</p>
+                    </div>
+                  </div>
+                  <dl className="divide-y divide-ink-700/70 px-5">
+                    {[
+                      ["Size", "standard"],
+                      ["Parameters", "6.7B"],
+                      ["Released", "November 2022"],
+                      ["Architecture", "decoder-only Transformer (OPT-based), with a few modifications"],
+                      ["License", "CC BY-NC 4.0 · non-commercial"],
+                      ["Trained on", "106B tokens of open-access science"],
+                    ].map(([k, v]) => (
+                      <div key={k} className="flex items-start justify-between gap-4 py-3">
+                        <dt className="shrink-0 pt-0.5 font-mono text-[10.5px] uppercase tracking-[0.16em] text-ink-500">
+                          {k}
+                        </dt>
+                        <dd className="max-w-[195px] text-right text-xs font-medium leading-relaxed text-ink-200">{v}</dd>
+                      </div>
+                    ))}
+                  </dl>
+                  <div className="grid grid-cols-3 divide-x divide-ink-700 border-t border-ink-700">
+                    {[
+                      ["Paper", "https://galactica.org/paper.pdf"],
+                      ["Demo", "https://galactica.org"],
+                      ["Hub card", "https://huggingface.co/facebook/galactica-6.7b"],
+                    ].map(([label, href]) => (
+                      <a
+                        key={label}
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="flex items-center justify-center gap-1.5 px-2 py-3 font-mono text-[11px] uppercase tracking-wider text-ink-400 transition-colors duration-200 hover:bg-ink-850 hover:text-ember-300"
+                      >
+                        {label}
+                        <IconArrowUpRight className="h-3 w-3" />
+                      </a>
+                    ))}
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* card body */}
+              <div className="space-y-5">
+                <Reveal>
+                  <CardBlock icon={IconBook} tone="mint" title="Intended use">
+                    Built for researchers studying language models on the scientific domain, and for developers
+                    building scientific tooling on top of them. The weights ship under a{" "}
+                    <a
+                      href="https://creativecommons.org/licenses/by-nc/4.0/"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-mint-300 underline decoration-mint-500/50 underline-offset-2 transition-colors hover:text-mint-400"
+                    >
+                      non-commercial CC BY-NC 4.0 license
+                    </a>{" "}
+                    — and the card is blunt about production use: given how readily language models hallucinate,
+                    deploy behind safeguards or not at all.
+                  </CardBlock>
+                </Reveal>
+                <Reveal delay={60}>
+                  <CardBlock icon={IconAtom} tone="sky" title="Training data">
+                    <span className="font-semibold text-ink-100">106 billion tokens</span> of open-access scientific
+                    text and data — papers, textbooks, scientific websites, encyclopedias, reference material,
+                    knowledge bases and more. Each modality is tokenized into the vocabulary, which is what gives the
+                    model a natural-language interface for LaTeX, molecules and proteins alike.
+                  </CardBlock>
+                </Reveal>
+                <Reveal delay={120}>
+                  <CardBlock icon={IconAlert} tone="ember" title="Performance & limitations">
+                    GALACTICA outperforms existing language models on knowledge probes, reasoning and
+                    knowledge-intensive scientific tasks — and even open-source general LMs on general NLP. The card
+                    still lists the caveats:
+                    <ul className="mt-3 space-y-2">
+                      {[
+                        "Hallucination-prone like any LM — a high-quality academic corpus doesn't prevent it, especially for less popular, less cited concepts.",
+                        "No guarantees of truthful output, and that extends to citation prediction.",
+                        "Citation behaviour approaches ground truth with scale, but a popularity bias persists even at the largest sizes.",
+                        "Toxicity rates are substantially lower than comparable LLMs, yet bias remains on certain measures — generate with care.",
+                      ].map((t) => (
+                        <li key={t.slice(0, 24)} className="flex gap-2.5 text-[13px] leading-relaxed">
+                          <span className="mt-[7px] h-1.5 w-1.5 shrink-0 rounded-full bg-ember-400/80" />
+                          <span>{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardBlock>
+                </Reveal>
+                <Reveal delay={180}>
+                  <CardBlock icon={IconSpark} tone="viol" title="Broader implications">
+                    A candidate interface for discovering academic literature — the paper demonstrates the model
+                    acting as an alternative to standard search tools — with downstream room in mathematics, biology
+                    and chemistry. The card's closing bet: a new generation of scientific tools gets built on large
+                    language models like this one.
+                  </CardBlock>
+                </Reveal>
+              </div>
+            </div>
+
+            {/* inference-widget prompts */}
+            <Reveal delay={100} className="mt-10">
+              <div className="rounded-xl border border-ink-700 bg-ink-900/70 p-5 sm:p-6">
+                <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2">
+                  <h3 className="font-display text-base font-semibold text-ink-100">Inference-widget prompts</h3>
+                  <p className="font-mono text-[11px] text-ink-500">
+                    lifted from the card's front matter — <span className="text-mint-400">run</span> loads one into
+                    the playground above
+                  </p>
+                </div>
+                <div className="flex flex-wrap gap-2.5">
+                  {WIDGET_PROMPTS.map((w) => (
+                    <div
+                      key={w.target}
+                      className="group flex max-w-full items-center gap-2 rounded-lg border border-ink-600 bg-ink-850/90 py-1.5 pl-3 pr-1.5 transition-all duration-200 hover:-translate-y-0.5 hover:border-mint-500/50"
+                    >
+                      <code className="max-w-[380px] truncate font-mono text-[11.5px] text-ink-200">
+                        {highlightTokens(w.text, "inline")}
+                      </code>
+                      <button
+                        onClick={() => tryIt(w.target)}
+                        className="inline-flex shrink-0 items-center gap-1 rounded-md border border-mint-500/40 bg-mint-500/10 px-2 py-1 font-mono text-[10px] text-mint-300 transition-all duration-200 hover:bg-mint-500/20 active:scale-95"
+                      >
+                        <IconPlay className="h-2.5 w-2.5" />
+                        run
+                      </button>
+                      <CopyButton text={w.text} small />
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- 07 citation ---------- */}
         <section id="citation" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-            <SectionHead no="05" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
+            <SectionHead no="07" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
             <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
               <Reveal>
                 <article className="group h-full rounded-xl border border-ink-700 bg-ink-900/85 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-ember-400/40 hover:shadow-[0_24px_60px_-28px_rgba(0,0,0,0.9)] sm:p-8">
@@ -550,8 +856,8 @@ $ pip install transformers accelerate
                 <CodeBlock code={BIBTEX} lang="bib" file="galactica.bib" maxHeight="max-h-[400px]" />
                 <p className="mt-4 font-mono text-[11px] leading-relaxed text-ink-500">
                   <span className="text-mint-400">&gt;</span> model.generate("Thanks for reading", new_doc=False) —
-                  this page is a rendering of the official galai README; every completion shown is quoted from the
-                  docs, not sampled live.
+                  this page renders the official galai README and the 6.7B model card; every completion shown is
+                  quoted from the docs, not sampled live.
                 </p>
               </Reveal>
             </div>
@@ -588,14 +894,17 @@ $ pip install transformers accelerate
                 </p>
               </div>
               <div className="flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs text-ink-400">
+                <a href="#install" className="nav-link transition-colors hover:text-ember-300">install</a>
+                <a href="#models" className="nav-link transition-colors hover:text-ember-300">models</a>
+                <a href="#deploy" className="nav-link transition-colors hover:text-ember-300">deploy</a>
+                <a href="#capabilities" className="nav-link transition-colors hover:text-ember-300">capabilities</a>
+                <a href="#card" className="nav-link transition-colors hover:text-ember-300">model card</a>
                 <a href="https://github.com/PapersWithCode/galai" target="_blank" rel="noreferrer" className="nav-link transition-colors hover:text-ember-300">github</a>
-                <a href="https://huggingface.co/facebook/galactica-6.7b" target="_blank" rel="noreferrer" className="nav-link transition-colors hover:text-ember-300">hugging face</a>
-                <a href="https://arxiv.org/abs/2211.05100" target="_blank" rel="noreferrer" className="nav-link transition-colors hover:text-ember-300">arxiv</a>
                 <a href="#top" className="nav-link transition-colors hover:text-ember-300">back to top ↑</a>
               </div>
             </div>
             <div className="mt-10 flex flex-col gap-2 border-t border-ink-800 pt-6 font-mono text-[10.5px] text-ink-500 sm:flex-row sm:justify-between">
-              <p>docs rendered from the galai README · completions quoted from the GALACTICA paper</p>
+              <p>docs rendered from the galai README + 6.7B model card · completions quoted, never sampled live</p>
               <p>
                 load: <span className="text-mint-400">gal.load_model("mini"… "huge")</span>
               </p>

@@ -334,3 +334,155 @@ export const METRICS = [
   { value: "77.6%", label: "PubMedQA dev", vs: "state-of-the-art" },
   { value: "52.9%", label: "MedMCQA dev", vs: "state-of-the-art" },
 ];
+
+/* ------------------------- weights download routes ------------------------- */
+
+export type DownloadRoute = {
+  id: string;
+  label: string;
+  file: string;
+  note: string;
+  code: string;
+};
+
+export const DOWNLOADS: DownloadRoute[] = [
+  {
+    id: "xet",
+    label: "Git + git-xet",
+    file: "git-xet · recommended",
+    note: "Xet-backed clones deduplicate the weight blobs and resume cleanly — the Hub's recommended path for multi-gigabyte repos.",
+    code: String.raw`# Make sure git-xet is installed — https://hf.co/docs/hub/git-xet
+brew install git-xet
+git xet install
+
+git clone https://huggingface.co/facebook/galactica-6.7b`,
+  },
+  {
+    id: "lfs-skip",
+    label: "Pointers only",
+    file: "git-lfs · skip smudge",
+    note: "Clone the repo skeleton instantly; the weight files stay behind LFS pointers until you decide to pull them.",
+    code: String.raw`# Clone without large files — just their pointers
+GIT_LFS_SKIP_SMUDGE=1 git clone https://huggingface.co/facebook/galactica-6.7b`,
+  },
+  {
+    id: "hf-cli",
+    label: "hf CLI",
+    file: "huggingface-cli",
+    note: "The official CLI downloads straight into your HF cache — no git repo, and transformers picks the weights up automatically.",
+    code: String.raw`# Make sure the hf CLI is installed
+curl -LsSf https://hf.co/cli/install.sh | bash
+
+# Download the model
+hf download facebook/galactica-6.7b`,
+  },
+];
+
+/* ------------------------ runtime variants (model card) ------------------------ */
+
+export type DeployVariant = {
+  id: string;
+  label: string;
+  tag: string;
+  blurb: string;
+  deps: string | null;
+  code: string;
+};
+
+export const DEPLOY_VARIANTS: DeployVariant[] = [
+  {
+    id: "cpu",
+    label: "CPU",
+    tag: "no extras",
+    blurb: "Runs anywhere with transformers alone. Fine for short prompts on the 6.7B model — slow, but zero extra dependencies.",
+    deps: null,
+    code: String.raw`from transformers import AutoTokenizer, OPTForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("facebook/galactica-6.7b")
+model = OPTForCausalLM.from_pretrained("facebook/galactica-6.7b")
+
+input_text = "The Transformer architecture [START_REF]"
+input_ids = tokenizer(input_text, return_tensors="pt").input_ids
+
+outputs = model.generate(input_ids)
+print(tokenizer.decode(outputs[0]))`,
+  },
+  {
+    id: "gpu",
+    label: "GPU",
+    tag: "accelerate",
+    blurb: "device_map=\"auto\" shards the model across your accelerators; the tokenized inputs are moved to CUDA before generate().",
+    deps: "pip install accelerate",
+    code: String.raw`# pip install accelerate
+from transformers import AutoTokenizer, OPTForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("facebook/galactica-6.7b")
+model = OPTForCausalLM.from_pretrained("facebook/galactica-6.7b", device_map="auto")
+
+input_text = "The Transformer architecture [START_REF]"
+input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to("cuda")
+
+outputs = model.generate(input_ids)
+print(tokenizer.decode(outputs[0]))`,
+  },
+  {
+    id: "fp16",
+    label: "FP16",
+    tag: "half precision",
+    blurb: "torch_dtype=torch.float16 halves the memory footprint and speeds up generation on Ampere-and-newer GPUs.",
+    deps: "pip install accelerate",
+    code: String.raw`# pip install accelerate
+import torch
+from transformers import AutoTokenizer, OPTForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("facebook/galactica-6.7b")
+model = OPTForCausalLM.from_pretrained(
+    "facebook/galactica-6.7b", device_map="auto", torch_dtype=torch.float16
+)
+
+input_text = "The Transformer architecture [START_REF]"
+input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to("cuda")
+
+outputs = model.generate(input_ids)
+print(tokenizer.decode(outputs[0]))`,
+  },
+  {
+    id: "int8",
+    label: "INT8",
+    tag: "bitsandbytes",
+    blurb: "load_in_8bit=True quantizes the weights to 8 bits — the 6.7B model fits comfortably in roughly 8 GB of VRAM.",
+    deps: "pip install bitsandbytes accelerate",
+    code: String.raw`# pip install bitsandbytes accelerate
+from transformers import AutoTokenizer, OPTForCausalLM
+
+tokenizer = AutoTokenizer.from_pretrained("facebook/galactica-6.7b")
+model = OPTForCausalLM.from_pretrained(
+    "facebook/galactica-6.7b", device_map="auto", load_in_8bit=True
+)
+
+input_text = "The Transformer architecture [START_REF]"
+input_ids = tokenizer(input_text, return_tensors="pt").input_ids.to("cuda")
+
+outputs = model.generate(input_ids)
+print(tokenizer.decode(outputs[0]))`,
+  },
+];
+
+/* -------------------- inference-widget prompts (front matter) -------------------- */
+
+export type WidgetPrompt = { text: string; target: string };
+
+export const WIDGET_PROMPTS: WidgetPrompt[] = [
+  { text: "The Transformer architecture [START_REF]", target: "citations" },
+  { text: String.raw`The Schwarzschild radius is defined as: \[`, target: "latex" },
+  {
+    text: "A force of 0.6N is applied to an object, which accelerates at 3m/s. What is its mass? <work>",
+    target: "reasoning",
+  },
+  { text: "Lecture 1: The Ising Model\n\n", target: "documents" },
+  { text: "[START_I_SMILES]", target: "molecules" },
+  {
+    text: "[START_AMINO]GHMQSITAGQKVISKHKNGRFYQCEVVRLTTETFYEVNFDDGSFSDNLYPEDIVSQDCLQFGPPAEGEVVQVRWTDGQVYGAKFVASHPIQMYQVEFEDGSQLVVKRDDVYTLDEELP[END_AMINO] ## Keywords",
+    target: "proteins",
+  },
+];
