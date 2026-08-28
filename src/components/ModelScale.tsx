@@ -7,11 +7,15 @@ const LO = Math.log10(0.125);
 const HI = Math.log10(120);
 const pct = (b: number) => ((Math.log10(b) - LO) / (HI - LO)) * 100;
 
+// shared grid template — the axis and every row must use the exact same one
+const COLS = "grid-cols-[78px_minmax(0,1fr)_92px] sm:grid-cols-[104px_minmax(0,1fr)_112px]";
+const GUTTER = "gap-x-3 px-2 sm:gap-x-4 sm:px-3";
+
 const TICKS = [
-  { label: "100M", at: pct(0.1) },
+  { label: "125M", at: 0 },
   { label: "1B", at: pct(1) },
   { label: "10B", at: pct(10) },
-  { label: "100B", at: pct(100) },
+  { label: "120B", at: 100 },
 ];
 
 export default function ModelScale() {
@@ -43,17 +47,21 @@ export default function ModelScale() {
         <p className="font-mono text-[11px] text-ink-500">all weights on the Hugging Face Hub</p>
       </div>
 
-      {/* axis */}
-      <div className="relative mb-2 h-5">
-        {TICKS.map((t) => (
-          <span
-            key={t.label}
-            className="absolute -translate-x-1/2 font-mono text-[10px] text-ink-500"
-            style={{ left: `${t.at}%` }}
-          >
-            {t.label}
-          </span>
-        ))}
+      {/* axis — same column grid as the rows below, ticks live in the track column */}
+      <div className={`mb-2 grid ${COLS} ${GUTTER}`}>
+        <span />
+        <div className="relative h-5">
+          {TICKS.map((t) => (
+            <span
+              key={t.label}
+              className="absolute -translate-x-1/2 font-mono text-[10px] text-ink-500"
+              style={{ left: `${t.at}%` }}
+            >
+              {t.label}
+            </span>
+          ))}
+        </div>
+        <span />
       </div>
 
       <div className="space-y-1.5">
@@ -66,26 +74,19 @@ export default function ModelScale() {
               href={`https://huggingface.co/${m.repo}`}
               target="_blank"
               rel="noreferrer"
-              className="group grid grid-cols-[64px_1fr_auto] items-center gap-x-3 rounded-lg border border-transparent px-2 py-2.5 transition-all duration-200 hover:border-ink-600 hover:bg-ink-850/80 sm:grid-cols-[90px_1fr_auto] sm:gap-x-4 sm:px-3"
+              className={`group grid ${COLS} ${GUTTER} items-center rounded-lg border border-transparent py-2.5 transition-all duration-200 hover:border-ink-600 hover:bg-ink-850/80`}
               style={{ transitionDelay: `${i * 20}ms` }}
             >
-              <span className="flex items-center gap-2">
-                <span
-                  className={`font-display text-sm font-semibold sm:text-base ${
-                    isStd ? "text-ember-300" : "text-ink-100"
-                  }`}
-                >
-                  {m.name}
-                </span>
-                {isStd && (
-                  <span className="hidden rounded border border-ember-400/40 bg-ember-400/10 px-1.5 py-px font-mono text-[9px] uppercase tracking-wider text-ember-300 lg:inline">
-                    docs use this
-                  </span>
-                )}
+              <span
+                className={`font-display text-sm font-semibold sm:text-base ${
+                  isStd ? "text-ember-300" : "text-ink-100"
+                }`}
+              >
+                {m.name}
               </span>
 
               <span className="relative h-7 overflow-hidden rounded-[4px] bg-ink-800/90">
-                {/* grid ticks inside track */}
+                {/* decade gridlines, aligned with the axis above */}
                 {TICKS.map((t) => (
                   <i
                     key={t.label}
@@ -94,7 +95,7 @@ export default function ModelScale() {
                   />
                 ))}
                 <span
-                  className={`bar-fill absolute left-0 top-0 flex h-full items-center rounded-[4px] ${
+                  className={`bar-fill absolute left-0 top-0 h-full rounded-[4px] ${
                     isStd
                       ? "bg-gradient-to-r from-ember-500/80 to-ember-400 shadow-[0_0_22px_-4px_rgba(255,180,84,0.55)]"
                       : "bg-gradient-to-r from-ink-600 to-mint-500/80 group-hover:to-mint-400"
@@ -102,12 +103,17 @@ export default function ModelScale() {
                   style={{ width: on ? `${w}%` : "0%" }}
                 >
                   <i className="absolute right-0 top-0 h-full w-[3px] bg-ink-100/70" />
+                  {isStd && (
+                    <span className="absolute inset-y-0 right-1.5 hidden items-center font-mono text-[9px] font-semibold uppercase tracking-[0.12em] text-ink-950 min-[420px]:flex">
+                      docs use this
+                    </span>
+                  )}
                 </span>
               </span>
 
               <span className="flex items-center justify-end gap-2.5">
-                <span className="font-mono text-sm text-ink-200">{m.params}</span>
-                <IconArrowUpRight className="h-3.5 w-3.5 text-ink-500 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mint-300" />
+                <span className="whitespace-nowrap font-mono text-sm text-ink-200">{m.params}</span>
+                <IconArrowUpRight className="h-3.5 w-3.5 shrink-0 text-ink-500 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mint-300" />
               </span>
             </a>
           );
