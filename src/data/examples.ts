@@ -486,3 +486,259 @@ export const WIDGET_PROMPTS: WidgetPrompt[] = [
     target: "proteins",
   },
 ];
+
+/* ======================== BUSINESS PLAN DATA ======================== */
+
+export const BUSINESS = {
+  name: "SciPilot",
+  tagline: "AI-powered scientific research platform",
+  vision:
+    "Démocratiser l'accès à la recherche scientifique de pointe en transformant la manière dont les chercheurs découvrent, comprennent et synthétisent la littérature scientifique mondiale.",
+
+  problem: [
+    {
+      title: "Surcharge d'information",
+      desc: "Plus de 5 millions d'articles scientifiques publiés chaque année. Impossible pour un chercheur de suivre son domaine.",
+      stat: "5M+",
+      unit: "papers/an",
+    },
+    {
+      title: "Fragmentation des outils",
+      desc: "Les chercheurs utilisent 7+ outils différents : PubMed, Google Scholar, Zotero, Overleaf, Mendeley… sans intégration.",
+      stat: "7+",
+      unit: "outils/disCIPLINE",
+    },
+    {
+      title: "Barrière linguistique",
+      desc: "80% de la littérature scientifique est en anglais, excluant des millions de chercheurs non-anglophones.",
+      stat: "80%",
+      unit: "en anglais",
+    },
+    {
+      title: "Rédaction chronophage",
+      desc: "Les chercheurs passent 30% de leur temps à rédiger, formater et citer — du temps volé à la recherche elle-même.",
+      stat: "30%",
+      unit: "du temps perdu",
+    },
+  ],
+
+  solution: {
+    name: "SciPilot",
+    desc: "Une plateforme SaaS unifiée qui utilise GALACTICA comme moteur d'intelligence pour automatiser la découverte, la compréhension et la rédaction scientifique.",
+    features: [
+      {
+        icon: "search",
+        title: "Recherche sémantique",
+        desc: "Trouvez des articles par concept, pas par mot-clé. GALACTICA comprend le contexte scientifique.",
+      },
+      {
+        icon: "summarize",
+        title: "Résumé automatique",
+        desc: "Résumés TLDR instantanés de n'importe quel article, avec extraction des résultats clés.",
+      },
+      {
+        icon: "cite",
+        title: "Génération de citations",
+        desc: "Écrivez un fait, GALACTICA trouve la citation appropriée dans son corpus de 48M d'articles.",
+      },
+      {
+        icon: "write",
+        title: "Assistant de rédaction",
+        desc: "Rédigez des sections de papier avec assistance IA : introduction, méthodes, discussion.",
+      },
+      {
+        icon: "molecule",
+        title: "Analyse moléculaire",
+        desc: "Pour la chimie et la biologie : génération de SMILES, prédiction de propriétés, annotations de protéines.",
+      },
+      {
+        icon: "math",
+        title: "Raisonnement mathématique",
+        desc: "Résolution d'équations, génération de LaTeX, vérification de preuves — pas à pas.",
+      },
+    ],
+  },
+
+  market: {
+    tam: { value: "$52B", label: "TAM", desc: "Marché mondial EdTech + ResearchTech" },
+    sam: { value: "$8.4B", label: "SAM", desc: "Outils de recherche scientifique (académique + pharma)" },
+    som: { value: "$420M", label: "SOM", desc: "Objectif 5 ans : 10% du marché SAM" },
+    users: "30M+ chercheurs actifs dans le monde",
+    growth: "12% CAGR marché ResearchTech",
+  },
+
+  pricing: [
+    {
+      tier: "Free",
+      price: "$0",
+      period: "",
+      target: "Étudiants & chercheurs indépendants",
+      features: [
+        "50 requêtes/mois",
+        "Résumés basiques",
+        "Accès communauté",
+        "Export BibTeX",
+      ],
+      cta: "Commencer gratuitement",
+      highlight: false,
+    },
+    {
+      tier: "Pro",
+      price: "$29",
+      period: "/mois",
+      target: "Chercheurs actifs & PhD",
+      features: [
+        "Requêtes illimitées",
+        "Résumés avancés + TLDR",
+        "Génération de citations",
+        "Assistant de rédaction",
+        "Export LaTeX/Word",
+        "Support prioritaire",
+      ],
+      cta: "Essai gratuit 14 jours",
+      highlight: true,
+    },
+    {
+      tier: "Lab",
+      price: "$99",
+      period: "/mois",
+      target: "Laboratoires & équipes de recherche",
+      features: [
+        "Tout Pro +",
+        "5 utilisateurs",
+        "Bibliothèque partagée",
+        "Analyse de corpus personnalisé",
+        "API access",
+        "Intégration Zotero/Mendeley",
+      ],
+      cta: "Contacter les ventes",
+      highlight: false,
+    },
+    {
+      tier: "Enterprise",
+      price: "Custom",
+      period: "",
+      target: "Universités, Pharma, Biotech",
+      features: [
+        "Tout Lab +",
+        "Utilisateurs illimités",
+        "Déploiement on-premise",
+        "Modèle fine-tuné personnalisé",
+        "SLA 99.9%",
+        "Support dédié 24/7",
+      ],
+      cta: "Planifier une démo",
+      highlight: false,
+    },
+  ],
+
+  projections: [
+    { year: "Y1", arr: 0.8, users: 12000, note: "Lancement beta + early adopters" },
+    { year: "Y2", arr: 4.2, users: 58000, note: "Croissance organique + partenariats universitaires" },
+    { year: "Y3", arr: 12.5, users: 145000, note: "Expansion internationale + Enterprise" },
+    { year: "Y4", arr: 28.0, users: 310000, note: "Leader du marché ResearchTech" },
+    { year: "Y5", arr: 52.0, users: 520000, note: "Plateforme dominante + IPO candidate" },
+  ],
+
+  gtm: [
+    {
+      phase: "Phase 1 : Lancement (Q1-Q2 2025)",
+      actions: [
+        "Beta privée avec 500 chercheurs sélectionnés",
+        "Partenariats avec 10 universités top-tier",
+        "Content marketing : articles de blog techniques, webinaires",
+        "Présence aux conférences : NeurIPS, ICML, ACS",
+      ],
+    },
+    {
+      phase: "Phase 2 : Croissance (Q3-Q4 2025)",
+      actions: [
+        "Lancement public + freemium",
+        "Programme d'affiliation pour chercheurs influents",
+        "Intégrations : Overleaf, Zotero, Mendeley, Google Scholar",
+        "Campagnes LinkedIn ciblées (académique + pharma)",
+      ],
+    },
+    {
+      phase: "Phase 3 : Scale (2026)",
+      actions: [
+        "Expansion internationale (FR, DE, JP, CN)",
+        "Offre Enterprise pour pharma/biotech",
+        "Marketplace de plugins communautaires",
+        "Série A : $15M pour accélérer",
+      ],
+    },
+  ],
+
+  team: [
+    { role: "CEO", profile: "Ex-Google Scholar, PhD en NLP, 10+ ans EdTech" },
+    { role: "CTO", profile: "Ex-Meta AI, expert transformers, contributeur HuggingFace" },
+    { role: "CSO (Chief Science Officer)", profile: "Professeur universitaire, 50+ publications, réseau académique" },
+    { role: "Head of Growth", profile: "Ex-Notion, growth hacker B2B SaaS, community builder" },
+    { role: "Head of Engineering", profile: "Ex-OpenAI, infrastructure ML à grande échelle" },
+  ],
+
+  roadmap: [
+    { quarter: "Q1 2025", milestone: "Beta privée", details: "500 early adopters, feedback loop" },
+    { quarter: "Q2 2025", milestone: "Lancement public", details: "Freemium, Pro tier, 10K users" },
+    { quarter: "Q3 2025", milestone: "Intégrations", details: "Overleaf, Zotero, API publique" },
+    { quarter: "Q4 2025", milestone: "Enterprise", details: "On-premise, custom models, pharma" },
+    { quarter: "Q1 2026", milestone: "International", details: "Multi-langue, expansion EU/Asia" },
+    { quarter: "Q2 2026", milestone: "Série A", details: "$15M raise, scale team & infra" },
+  ],
+
+  risks: [
+    {
+      risk: "Licence CC BY-NC 4.0",
+      impact: "Élevé",
+      mitigation: "Modèle freemium non-commercial + licensing commercial négocié avec Meta AI",
+    },
+    {
+      risk: "Concurrents (Elicit, Consensus, Scispace)",
+      impact: "Moyen",
+      mitigation: "Avantage technique GALACTICA (scientifique natif) + UX supérieure",
+    },
+    {
+      risk: "Adoption lente du monde académique",
+      impact: "Moyen",
+      mitigation: "Partenariats universitaires + programme ambassadeurs",
+    },
+    {
+      risk: "Coûts d'infrastructure (GPU)",
+      impact: "Élevé",
+      mitigation: "Optimisation INT8/quantization + caching agressif + pricing adapté",
+    },
+    {
+      risk: "Hallucinations / qualité",
+      impact: "Élevé",
+      mitigation: "Vérification humaine + système de feedback + transparency sur limitations",
+    },
+  ],
+
+  competitive: [
+    {
+      name: "Elicit",
+      strength: "UX propre, bonne adoption",
+      weakness: "Pas de génération, juste recherche",
+      scipilot: "GALACTICA natif + rédaction assistée",
+    },
+    {
+      name: "Consensus",
+      strength: "Moteur de recherche scientifique",
+      weakness: "Pas de compréhension profonde",
+      scipilot: "Raisonnement mathématique + chimie/biologie",
+    },
+    {
+      name: "Scispace",
+      strength: "Gratuit, bonne couverture",
+      weakness: "Qualité variable, pas de génération",
+      scipilot: "Qualité scientifique supérieure + citations automatiques",
+    },
+    {
+      name: "ChatGPT / Claude",
+      strength: "Capacités générales, popularité",
+      weakness: "Pas spécialisé scientifique, hallucinations",
+      scipilot: "Entraîné sur 106B tokens scientifiques, citations fiables",
+    },
+  ],
+};

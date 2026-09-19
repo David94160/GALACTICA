@@ -281,3 +281,62 @@ export function IconAlert({ className }: P) {
     </svg>
   );
 }
+
+export function IconChart({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M3 3v18h18" />
+      <path d="M7 14l3-3 4 4 5-6" />
+    </svg>
+  );
+}
+
+export function IconTarget({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <circle cx="12" cy="12" r="9" />
+      <circle cx="12" cy="12" r="5" />
+      <circle cx="12" cy="12" r="1.5" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
+
+export function IconUsers({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <circle cx="9" cy="7" r="3" />
+      <path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6" />
+      <circle cx="17" cy="8" r="2.5" />
+      <path d="M15 20c0-2.2 1.3-4 3-4s3 1.8 3 4" />
+    </svg>
+  );
+}
+
+export function IconTrend({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M3 17l6-6 4 4 8-8" />
+      <path d="M17 7h4v4" />
+    </svg>
+  );
+}
+
+export function IconShield({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 2L3 7v6c0 5.5 3.8 10.7 9 12 5.2-1.3 9-6.5 9-12V7l-9-5z" />
+      <path d="M9 12l2 2 4-4" />
+    </svg>
+  );
+}
+
+export function IconRocket({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 2c-2 4-2 8 0 12s4 6 6 8" />
+      <path d="M12 2c2 4 2 8 0 12s-4 6-6 8" />
+      <circle cx="12" cy="10" r="2" />
+      <path d="M8 14l-3 3M16 14l3 3" />
+    </svg>
+  );
+}

@@ -4,7 +4,7 @@ import Playground from "./components/Playground";
 import CodeBlock, { CopyButton } from "./components/CodeBlock";
 import ModelScale from "./components/ModelScale";
 import { highlightTokens } from "./components/highlight";
-import { BIBTEX, DEPLOY_VARIANTS, DOWNLOADS, EXAMPLES, METRICS, QUICKSTART, WIDGET_PROMPTS } from "./data/examples";
+import { BIBTEX, BUSINESS, DEPLOY_VARIANTS, DOWNLOADS, EXAMPLES, METRICS, QUICKSTART, WIDGET_PROMPTS } from "./data/examples";
 import {
   IconAlert,
   IconArrowUpRight,
@@ -12,6 +12,7 @@ import {
   IconBook,
   IconBrackets,
   IconBubble,
+  IconChart,
   IconCode,
   IconCompress,
   IconCpu,
@@ -27,8 +28,13 @@ import {
   IconPage,
   IconPlay,
   IconRadical,
+  IconRocket,
+  IconShield,
   IconSpark,
+  IconTarget,
   IconTerminal,
+  IconTrend,
+  IconUsers,
 } from "./components/Icons";
 
 type IconT = ComponentType<{ className?: string }>;
@@ -54,6 +60,7 @@ const NAV = [
   { id: "deploy", label: "Deploy" },
   { id: "capabilities", label: "Capabilities" },
   { id: "card", label: "Model card" },
+  { id: "business", label: "Business plan" },
   { id: "citation", label: "Citation" },
 ];
 
@@ -816,10 +823,419 @@ $ pip install transformers accelerate
           </div>
         </section>
 
-        {/* ---------- 07 citation ---------- */}
+        {/* ---------- 07 business plan ---------- */}
+        <section id="business" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+            <SectionHead
+              no="07"
+              title="Business Plan"
+              sub="Transformer GALACTICA en une plateforme SaaS de recherche scientifique — de la vision stratégique aux projections financières."
+            />
+
+            {/* Hero business plan */}
+            <Reveal>
+              <div className="mb-12 overflow-hidden rounded-2xl border border-mint-500/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 shadow-[0_20px_60px_-20px_rgba(63,224,197,0.2)] sm:p-12">
+                <div className="flex items-center gap-3 mb-4">
+                  <IconRocket className="h-8 w-8 text-mint-400" />
+                  <span className="font-mono text-xs uppercase tracking-[0.2em] text-mint-400">Projet : {BUSINESS.name}</span>
+                </div>
+                <h3 className="font-display text-4xl font-bold tracking-tight text-ink-100 sm:text-5xl">
+                  {BUSINESS.tagline}
+                </h3>
+                <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-300 sm:text-lg">
+                  {BUSINESS.vision}
+                </p>
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <div className="rounded-lg border border-mint-500/40 bg-mint-500/10 px-4 py-2">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-mint-400">Modèle</p>
+                    <p className="font-display text-lg font-semibold text-mint-300">SaaS B2B/B2C</p>
+                  </div>
+                  <div className="rounded-lg border border-ember-400/40 bg-ember-400/10 px-4 py-2">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-ember-400">Objectif Y5</p>
+                    <p className="font-display text-lg font-semibold text-ember-300">$52M ARR</p>
+                  </div>
+                  <div className="rounded-lg border border-skyx-400/40 bg-skyx-400/10 px-4 py-2">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-skyx-400">Marché cible</p>
+                    <p className="font-display text-lg font-semibold text-skyx-300">30M+ chercheurs</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Problème */}
+            <Reveal delay={100}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconAlert className="h-6 w-6 text-ember-400" />
+                  Le problème
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {BUSINESS.problem.map((p, i) => (
+                    <div
+                      key={p.title}
+                      className="group rounded-xl border border-ink-700 bg-ink-900/80 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-ember-400/40 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.8)]"
+                      style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                      <p className="font-display text-4xl font-bold text-ember-300 transition-transform duration-300 group-hover:scale-110">
+                        {p.stat}
+                      </p>
+                      <p className="mt-1 font-mono text-[10px] uppercase tracking-wider text-ink-500">{p.unit}</p>
+                      <h4 className="mt-3 font-display text-base font-semibold text-ink-100">{p.title}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-400">{p.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Solution */}
+            <Reveal delay={150}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconSpark className="h-6 w-6 text-mint-400" />
+                  La solution : {BUSINESS.solution.name}
+                </h3>
+                <p className="mb-6 max-w-3xl text-base leading-relaxed text-ink-300">
+                  {BUSINESS.solution.desc}
+                </p>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {BUSINESS.solution.features.map((f, i) => (
+                    <div
+                      key={f.title}
+                      className="group rounded-xl border border-ink-700 bg-ink-900/80 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-mint-500/40 hover:shadow-[0_16px_40px_-16px_rgba(63,224,197,0.15)]"
+                      style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                      <div className="mb-3 flex h-10 w-10 items-center justify-center rounded-lg border border-mint-500/30 bg-mint-500/10 text-mint-400 transition-transform duration-300 group-hover:scale-110">
+                        {f.icon === "search" && <IconTarget className="h-5 w-5" />}
+                        {f.icon === "summarize" && <IconCompress className="h-5 w-5" />}
+                        {f.icon === "cite" && <IconBrackets className="h-5 w-5" />}
+                        {f.icon === "write" && <IconIBeam className="h-5 w-5" />}
+                        {f.icon === "molecule" && <IconMolecule className="h-5 w-5" />}
+                        {f.icon === "math" && <IconRadical className="h-5 w-5" />}
+                      </div>
+                      <h4 className="font-display text-base font-semibold text-ink-100">{f.title}</h4>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-400">{f.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Marché */}
+            <Reveal delay={200}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconTarget className="h-6 w-6 text-skyx-400" />
+                  Marché cible
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {[BUSINESS.market.tam, BUSINESS.market.sam, BUSINESS.market.som].map((m, i) => (
+                    <div
+                      key={m.label}
+                      className={`rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
+                        i === 0
+                          ? "border-skyx-400/40 bg-skyx-400/5 hover:border-skyx-400/60 hover:shadow-[0_16px_40px_-16px_rgba(127,180,255,0.2)]"
+                          : i === 1
+                            ? "border-mint-500/40 bg-mint-500/5 hover:border-mint-500/60 hover:shadow-[0_16px_40px_-16px_rgba(63,224,197,0.2)]"
+                            : "border-ember-400/40 bg-ember-400/5 hover:border-ember-400/60 hover:shadow-[0_16px_40px_-16px_rgba(255,180,84,0.2)]"
+                      }`}
+                    >
+                      <p className="font-mono text-xs uppercase tracking-wider text-ink-500">{m.label}</p>
+                      <p
+                        className={`mt-2 font-display text-5xl font-bold tracking-tight ${
+                          i === 0 ? "text-skyx-300" : i === 1 ? "text-mint-300" : "text-ember-300"
+                        }`}
+                      >
+                        {m.value}
+                      </p>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-300">{m.desc}</p>
+                    </div>
+                  ))}
+                </div>
+                <div className="mt-4 grid gap-4 sm:grid-cols-2">
+                  <div className="rounded-lg border border-ink-700 bg-ink-900/60 px-5 py-4">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-ink-500">Utilisateurs potentiels</p>
+                    <p className="mt-1 font-display text-2xl font-semibold text-ink-100">{BUSINESS.market.users}</p>
+                  </div>
+                  <div className="rounded-lg border border-ink-700 bg-ink-900/60 px-5 py-4">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-ink-500">Croissance marché</p>
+                    <p className="mt-1 font-display text-2xl font-semibold text-ink-100">{BUSINESS.market.growth}</p>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Pricing */}
+            <Reveal delay={250}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconChart className="h-6 w-6 text-ember-400" />
+                  Modèle de revenus
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+                  {BUSINESS.pricing.map((p, i) => (
+                    <div
+                      key={p.tier}
+                      className={`group relative rounded-xl border p-6 transition-all duration-300 hover:-translate-y-1 ${
+                        p.highlight
+                          ? "border-ember-400/60 bg-gradient-to-b from-ember-400/10 to-ink-900 shadow-[0_16px_40px_-16px_rgba(255,180,84,0.3)]"
+                          : "border-ink-700 bg-ink-900/80 hover:border-ink-500 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.6)]"
+                      }`}
+                      style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                      {p.highlight && (
+                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 rounded-full border border-ember-400/60 bg-ember-400 px-3 py-1 font-mono text-[10px] font-semibold uppercase tracking-wider text-ink-950">
+                          Populaire
+                        </div>
+                      )}
+                      <p className="font-display text-lg font-semibold text-ink-100">{p.tier}</p>
+                      <p className="mt-2 flex items-baseline gap-1">
+                        <span className={`font-display text-4xl font-bold ${p.highlight ? "text-ember-300" : "text-ink-100"}`}>
+                          {p.price}
+                        </span>
+                        {p.period && <span className="text-sm text-ink-400">{p.period}</span>}
+                      </p>
+                      <p className="mt-2 text-xs leading-relaxed text-ink-400">{p.target}</p>
+                      <ul className="mt-4 space-y-2">
+                        {p.features.map((f) => (
+                          <li key={f} className="flex items-start gap-2 text-sm text-ink-300">
+                            <span className="mt-1 h-1.5 w-1.5 shrink-0 rounded-full bg-mint-400/80" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                      <button
+                        className={`mt-5 w-full rounded-md px-4 py-2.5 font-mono text-xs font-semibold transition-all duration-200 active:scale-95 ${
+                          p.highlight
+                            ? "bg-ember-400 text-ink-950 hover:bg-ember-300"
+                            : "border border-ink-600 text-ink-200 hover:border-mint-500/60 hover:text-mint-300"
+                        }`}
+                      >
+                        {p.cta}
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Projections */}
+            <Reveal delay={300}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconTrend className="h-6 w-6 text-mint-400" />
+                  Projections financières (5 ans)
+                </h3>
+                <div className="rounded-xl border border-ink-700 bg-ink-900/80 p-6">
+                  <div className="mb-6 grid gap-4 sm:grid-cols-5">
+                    {BUSINESS.projections.map((p, i) => (
+                      <div
+                        key={p.year}
+                        className="group rounded-lg border border-ink-700 bg-ink-850/60 p-4 transition-all duration-300 hover:-translate-y-0.5 hover:border-mint-500/40 hover:bg-ink-800"
+                        style={{ transitionDelay: `${i * 50}ms` }}
+                      >
+                        <p className="font-mono text-[10px] uppercase tracking-wider text-ink-500">{p.year}</p>
+                        <p className="mt-2 font-display text-3xl font-bold text-mint-300">${p.arr}M</p>
+                        <p className="mt-1 font-mono text-[11px] text-ink-400">ARR</p>
+                        <p className="mt-3 font-display text-lg font-semibold text-ink-100">
+                          {p.users.toLocaleString()}
+                        </p>
+                        <p className="font-mono text-[10px] text-ink-500">users</p>
+                        <p className="mt-3 text-xs leading-relaxed text-ink-400">{p.note}</p>
+                      </div>
+                    ))}
+                  </div>
+                  {/* Visual bar chart */}
+                  <div className="mt-6 flex items-end gap-3 h-48">
+                    {BUSINESS.projections.map((p, i) => {
+                      const maxArr = Math.max(...BUSINESS.projections.map((x) => x.arr));
+                      const height = (p.arr / maxArr) * 100;
+                      return (
+                        <div key={p.year} className="flex-1 flex flex-col items-center gap-2">
+                          <div
+                            className="w-full rounded-t-lg bg-gradient-to-t from-mint-500/60 to-mint-400 transition-all duration-700 hover:from-mint-400/80 hover:to-mint-300"
+                            style={{ height: `${height}%` }}
+                          />
+                          <p className="font-mono text-[10px] text-ink-500">{p.year}</p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Go-to-market */}
+            <Reveal delay={350}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconRocket className="h-6 w-6 text-ember-400" />
+                  Go-to-market
+                </h3>
+                <div className="space-y-4">
+                  {BUSINESS.gtm.map((phase, i) => (
+                    <div
+                      key={phase.phase}
+                      className="group rounded-xl border border-ink-700 bg-ink-900/80 p-6 transition-all duration-300 hover:-translate-y-0.5 hover:border-ember-400/40 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.8)]"
+                      style={{ transitionDelay: `${i * 100}ms` }}
+                    >
+                      <div className="flex items-start gap-4">
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-lg border border-ember-400/40 bg-ember-400/10 font-display text-xl font-bold text-ember-300">
+                          {i + 1}
+                        </div>
+                        <div className="flex-1">
+                          <h4 className="font-display text-lg font-semibold text-ink-100">{phase.phase}</h4>
+                          <ul className="mt-3 space-y-2">
+                            {phase.actions.map((a) => (
+                              <li key={a} className="flex items-start gap-2 text-sm text-ink-300">
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ember-400/80" />
+                                <span>{a}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Équipe */}
+            <Reveal delay={400}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconUsers className="h-6 w-6 text-skyx-400" />
+                  Équipe fondatrice
+                </h3>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {BUSINESS.team.map((t, i) => (
+                    <div
+                      key={t.role}
+                      className="group rounded-xl border border-ink-700 bg-ink-900/80 p-5 transition-all duration-300 hover:-translate-y-1 hover:border-skyx-400/40 hover:shadow-[0_16px_40px_-16px_rgba(127,180,255,0.2)]"
+                      style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                      <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full border border-skyx-400/30 bg-skyx-400/10 text-skyx-400 transition-transform duration-300 group-hover:scale-110">
+                        <IconUsers className="h-6 w-6" />
+                      </div>
+                      <p className="font-display text-lg font-semibold text-ink-100">{t.role}</p>
+                      <p className="mt-2 text-sm leading-relaxed text-ink-400">{t.profile}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Roadmap */}
+            <Reveal delay={450}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconChart className="h-6 w-6 text-mint-400" />
+                  Roadmap
+                </h3>
+                <div className="relative">
+                  <div className="absolute left-6 top-0 bottom-0 w-px bg-gradient-to-b from-mint-400/60 via-ember-400/60 to-skyx-400/60" />
+                  <div className="space-y-4">
+                    {BUSINESS.roadmap.map((r, i) => (
+                      <div
+                        key={r.quarter}
+                        className="group relative flex items-start gap-4 pl-16 transition-all duration-300 hover:translate-x-1"
+                        style={{ transitionDelay: `${i * 50}ms` }}
+                      >
+                        <div className="absolute left-4 top-2 h-4 w-4 rounded-full border-2 border-mint-400 bg-ink-950 transition-all duration-300 group-hover:scale-125 group-hover:bg-mint-400" />
+                        <div className="flex-1 rounded-lg border border-ink-700 bg-ink-900/80 p-4 transition-all duration-300 group-hover:border-mint-500/40 group-hover:bg-ink-850">
+                          <p className="font-mono text-xs uppercase tracking-wider text-mint-400">{r.quarter}</p>
+                          <p className="mt-1 font-display text-base font-semibold text-ink-100">{r.milestone}</p>
+                          <p className="mt-1 text-sm text-ink-400">{r.details}</p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Risques */}
+            <Reveal delay={500}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconShield className="h-6 w-6 text-ember-400" />
+                  Risques & mitigations
+                </h3>
+                <div className="space-y-3">
+                  {BUSINESS.risks.map((r, i) => (
+                    <div
+                      key={r.risk}
+                      className="group rounded-xl border border-ink-700 bg-ink-900/80 p-5 transition-all duration-300 hover:-translate-y-0.5 hover:border-ember-400/40 hover:shadow-[0_16px_40px_-16px_rgba(0,0,0,0.8)]"
+                      style={{ transitionDelay: `${i * 50}ms` }}
+                    >
+                      <div className="flex items-start justify-between gap-4">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-3">
+                            <h4 className="font-display text-base font-semibold text-ink-100">{r.risk}</h4>
+                            <span
+                              className={`rounded-full px-2.5 py-0.5 font-mono text-[10px] font-semibold uppercase tracking-wider ${
+                                r.impact === "Élevé"
+                                  ? "border border-ember-400/40 bg-ember-400/10 text-ember-300"
+                                  : "border border-mint-500/40 bg-mint-500/10 text-mint-300"
+                              }`}
+                            >
+                              Impact {r.impact.toLowerCase()}
+                            </span>
+                          </div>
+                          <p className="mt-2 text-sm leading-relaxed text-ink-300">
+                            <span className="font-semibold text-mint-300">Mitigation :</span> {r.mitigation}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Avantage concurrentiel */}
+            <Reveal delay={550}>
+              <div>
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconTrend className="h-6 w-6 text-mint-400" />
+                  Avantage concurrentiel
+                </h3>
+                <div className="overflow-hidden rounded-xl border border-ink-700 bg-ink-900/80">
+                  <div className="grid grid-cols-[1fr_1fr_1fr] gap-px bg-ink-700">
+                    <div className="bg-ink-850 px-4 py-3 font-mono text-[10px] uppercase tracking-wider text-ink-500">
+                      Concurrent
+                    </div>
+                    <div className="bg-ink-850 px-4 py-3 font-mono text-[10px] uppercase tracking-wider text-ink-500">
+                      Faiblesse
+                    </div>
+                    <div className="bg-ink-850 px-4 py-3 font-mono text-[10px] uppercase tracking-wider text-mint-400">
+                      SciPilot
+                    </div>
+                    {BUSINESS.competitive.map((c) => (
+                      <div key={c.name} className="contents">
+                        <div className="bg-ink-900/80 px-4 py-4 font-display text-sm font-semibold text-ink-100">
+                          {c.name}
+                        </div>
+                        <div className="bg-ink-900/80 px-4 py-4 text-sm text-ink-400">
+                          {c.weakness}
+                        </div>
+                        <div className="bg-ink-900/80 px-4 py-4 text-sm text-mint-300">
+                          {c.scipilot}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+
+        {/* ---------- 08 citation ---------- */}
         <section id="citation" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-            <SectionHead no="07" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
+            <SectionHead no="08" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
             <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
               <Reveal>
                 <article className="group h-full rounded-xl border border-ink-700 bg-ink-900/85 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-ember-400/40 hover:shadow-[0_24px_60px_-28px_rgba(0,0,0,0.9)] sm:p-8">
@@ -899,6 +1315,7 @@ $ pip install transformers accelerate
                 <a href="#deploy" className="nav-link transition-colors hover:text-ember-300">deploy</a>
                 <a href="#capabilities" className="nav-link transition-colors hover:text-ember-300">capabilities</a>
                 <a href="#card" className="nav-link transition-colors hover:text-ember-300">model card</a>
+                <a href="#business" className="nav-link transition-colors hover:text-ember-300">business plan</a>
                 <a href="https://github.com/PapersWithCode/galai" target="_blank" rel="noreferrer" className="nav-link transition-colors hover:text-ember-300">github</a>
                 <a href="#top" className="nav-link transition-colors hover:text-ember-300">back to top ↑</a>
               </div>
