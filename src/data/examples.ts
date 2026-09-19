@@ -490,10 +490,10 @@ export const WIDGET_PROMPTS: WidgetPrompt[] = [
 /* ======================== BUSINESS PLAN DATA ======================== */
 
 export const BUSINESS = {
-  name: "SciPilot",
-  tagline: "AI-powered scientific research platform",
+  name: "Sirius",
+  tagline: "L'intelligence scientifique augmentée",
   vision:
-    "Démocratiser l'accès à la recherche scientifique de pointe en transformant la manière dont les chercheurs découvrent, comprennent et synthétisent la littérature scientifique mondiale.",
+    "Sirius est l'assistant de recherche ultime : il se souvient de tout ce que vous avez exploré, comprend vos projets en profondeur, et déploie une puissance de calcul inégalée pour résoudre les problèmes scientifiques les plus complexes.",
 
   problem: [
     {
@@ -523,13 +523,41 @@ export const BUSINESS = {
   ],
 
   solution: {
-    name: "SciPilot",
-    desc: "Une plateforme SaaS unifiée qui utilise GALACTICA comme moteur d'intelligence pour automatiser la découverte, la compréhension et la rédaction scientifique.",
+    name: "Sirius",
+    desc: "Sirius combine deux capacités fondamentales : une mémoire persistante qui retient tout votre historique de recherche, et une puissance de calcul massive pour résoudre les problèmes scientifiques les plus complexes.",
+    pillars: [
+      {
+        icon: "memory",
+        title: "Mémoire",
+        subtitle: "Il se souvient de tout",
+        desc: "Sirius maintient un contexte permanent de vos recherches, conversations et découvertes. Il sait ce que vous avez exploré hier, la semaine dernière, il y a un mois.",
+        features: [
+          "Historique de recherche persistant",
+          "Contexte conversationnel illimité",
+          "Connexions automatiques entre vos projets",
+          "Rappels intelligents basés sur vos patterns",
+          "Base de connaissances personnelle évolutive",
+        ],
+      },
+      {
+        icon: "power",
+        title: "Puissance",
+        subtitle: "Force de calcul inégalée",
+        desc: "Propulsé par GALACTICA 120B et des infrastructures GPU de pointe, Sirius déploie une puissance de raisonnement capable de résoudre des problèmes scientifiques complexes en temps réel.",
+        features: [
+          "Raisonnement mathématique avancé",
+          "Analyse moléculaire en temps réel",
+          "Génération de code scientifique optimisé",
+          "Simulation et modélisation accélérée",
+          "Traitement de corpus massifs (100K+ articles)",
+        ],
+      },
+    ],
     features: [
       {
         icon: "search",
         title: "Recherche sémantique",
-        desc: "Trouvez des articles par concept, pas par mot-clé. GALACTICA comprend le contexte scientifique.",
+        desc: "Trouvez des articles par concept, pas par mot-clé. Sirius comprend le contexte scientifique et votre historique.",
       },
       {
         icon: "summarize",
@@ -539,7 +567,7 @@ export const BUSINESS = {
       {
         icon: "cite",
         title: "Génération de citations",
-        desc: "Écrivez un fait, GALACTICA trouve la citation appropriée dans son corpus de 48M d'articles.",
+        desc: "Écrivez un fait, Sirius trouve la citation appropriée dans son corpus de 48M d'articles.",
       },
       {
         icon: "write",
@@ -719,26 +747,26 @@ export const BUSINESS = {
     {
       name: "Elicit",
       strength: "UX propre, bonne adoption",
-      weakness: "Pas de génération, juste recherche",
-      scipilot: "GALACTICA natif + rédaction assistée",
+      weakness: "Pas de mémoire, juste recherche ponctuelle",
+      sirius: "Mémoire persistante + rédaction assistée",
     },
     {
       name: "Consensus",
       strength: "Moteur de recherche scientifique",
-      weakness: "Pas de compréhension profonde",
-      scipilot: "Raisonnement mathématique + chimie/biologie",
+      weakness: "Pas de compréhension profonde, pas de contexte",
+      sirius: "Puissance de raisonnement + mémoire contextuelle",
     },
     {
       name: "Scispace",
       strength: "Gratuit, bonne couverture",
-      weakness: "Qualité variable, pas de génération",
-      scipilot: "Qualité scientifique supérieure + citations automatiques",
+      weakness: "Qualité variable, pas de génération, pas de mémoire",
+      sirius: "Qualité scientifique supérieure + mémoire + citations automatiques",
     },
     {
       name: "ChatGPT / Claude",
       strength: "Capacités générales, popularité",
-      weakness: "Pas spécialisé scientifique, hallucinations",
-      scipilot: "Entraîné sur 106B tokens scientifiques, citations fiables",
+      weakness: "Pas spécialisé scientifique, hallucinations, mémoire limitée",
+      sirius: "Entraîné sur 106B tokens scientifiques, mémoire illimitée, puissance dédiée",
     },
   ],
 };

@@ -23,10 +23,12 @@ import {
   IconGpu,
   IconHelix,
   IconIBeam,
+  IconMemory,
   IconMolecule,
   IconNodes,
   IconPage,
   IconPlay,
+  IconPower,
   IconRadical,
   IconRocket,
   IconShield,
@@ -845,7 +847,7 @@ $ pip install transformers accelerate
                 <p className="mt-4 max-w-3xl text-base leading-relaxed text-ink-300 sm:text-lg">
                   {BUSINESS.vision}
                 </p>
-                <div className="mt-8 flex flex-wrap gap-3">
+                <div className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
                   <div className="rounded-lg border border-mint-500/40 bg-mint-500/10 px-4 py-2">
                     <p className="font-mono text-[10px] uppercase tracking-wider text-mint-400">Modèle</p>
                     <p className="font-display text-lg font-semibold text-mint-300">SaaS B2B/B2C</p>
@@ -857,6 +859,10 @@ $ pip install transformers accelerate
                   <div className="rounded-lg border border-skyx-400/40 bg-skyx-400/10 px-4 py-2">
                     <p className="font-mono text-[10px] uppercase tracking-wider text-skyx-400">Marché cible</p>
                     <p className="font-display text-lg font-semibold text-skyx-300">30M+ chercheurs</p>
+                  </div>
+                  <div className="rounded-lg border border-viol-400/40 bg-viol-400/10 px-4 py-2">
+                    <p className="font-mono text-[10px] uppercase tracking-wider text-viol-400">Moteur IA</p>
+                    <p className="font-display text-lg font-semibold text-viol-300">GALACTICA 120B</p>
                   </div>
                 </div>
               </div>
@@ -888,16 +894,81 @@ $ pip install transformers accelerate
               </div>
             </Reveal>
 
-            {/* Solution */}
+            {/* Piliers : Mémoire & Puissance */}
             <Reveal delay={150}>
               <div className="mb-10">
                 <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
                   <IconSpark className="h-6 w-6 text-mint-400" />
-                  La solution : {BUSINESS.solution.name}
+                  Deux piliers fondamentaux
                 </h3>
-                <p className="mb-6 max-w-3xl text-base leading-relaxed text-ink-300">
+                <p className="mb-8 max-w-3xl text-base leading-relaxed text-ink-300">
                   {BUSINESS.solution.desc}
                 </p>
+                <div className="grid gap-6 lg:grid-cols-2">
+                  {/* Mémoire */}
+                  <div className="group relative overflow-hidden rounded-2xl border border-mint-500/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-mint-400/60 hover:shadow-[0_20px_60px_-20px_rgba(63,224,197,0.3)]">
+                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-mint-500/5 blur-3xl transition-all duration-500 group-hover:bg-mint-400/10" />
+                    <div className="relative">
+                      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-mint-500/40 bg-mint-500/10 text-mint-400 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                        <IconMemory className="h-8 w-8" />
+                      </div>
+                      <h4 className="font-display text-3xl font-bold tracking-tight text-mint-300">
+                        {BUSINESS.solution.pillars[0].title}
+                      </h4>
+                      <p className="mt-1 font-mono text-xs uppercase tracking-wider text-mint-400/80">
+                        {BUSINESS.solution.pillars[0].subtitle}
+                      </p>
+                      <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                        {BUSINESS.solution.pillars[0].desc}
+                      </p>
+                      <ul className="mt-6 space-y-2.5">
+                        {BUSINESS.solution.pillars[0].features.map((f) => (
+                          <li key={f} className="flex items-start gap-2.5 text-sm text-ink-200">
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-mint-400" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  {/* Puissance */}
+                  <div className="group relative overflow-hidden rounded-2xl border border-ember-400/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-ember-400/60 hover:shadow-[0_20px_60px_-20px_rgba(255,180,84,0.3)]">
+                    <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-ember-400/5 blur-3xl transition-all duration-500 group-hover:bg-ember-400/10" />
+                    <div className="relative">
+                      <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-ember-400/40 bg-ember-400/10 text-ember-400 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                        <IconPower className="h-8 w-8" />
+                      </div>
+                      <h4 className="font-display text-3xl font-bold tracking-tight text-ember-300">
+                        {BUSINESS.solution.pillars[1].title}
+                      </h4>
+                      <p className="mt-1 font-mono text-xs uppercase tracking-wider text-ember-400/80">
+                        {BUSINESS.solution.pillars[1].subtitle}
+                      </p>
+                      <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                        {BUSINESS.solution.pillars[1].desc}
+                      </p>
+                      <ul className="mt-6 space-y-2.5">
+                        {BUSINESS.solution.pillars[1].features.map((f) => (
+                          <li key={f} className="flex items-start gap-2.5 text-sm text-ink-200">
+                            <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-ember-400" />
+                            <span>{f}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
+
+            {/* Features additionnelles */}
+            <Reveal delay={200}>
+              <div className="mb-10">
+                <h3 className="mb-6 flex items-center gap-2.5 font-display text-2xl font-bold tracking-tight text-ink-100">
+                  <IconTarget className="h-6 w-6 text-skyx-400" />
+                  Fonctionnalités clés
+                </h3>
                 <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                   {BUSINESS.solution.features.map((f, i) => (
                     <div
@@ -1210,7 +1281,7 @@ $ pip install transformers accelerate
                       Faiblesse
                     </div>
                     <div className="bg-ink-850 px-4 py-3 font-mono text-[10px] uppercase tracking-wider text-mint-400">
-                      SciPilot
+                      Sirius
                     </div>
                     {BUSINESS.competitive.map((c) => (
                       <div key={c.name} className="contents">
@@ -1221,7 +1292,7 @@ $ pip install transformers accelerate
                           {c.weakness}
                         </div>
                         <div className="bg-ink-900/80 px-4 py-4 text-sm text-mint-300">
-                          {c.scipilot}
+                          {c.sirius}
                         </div>
                       </div>
                     ))}

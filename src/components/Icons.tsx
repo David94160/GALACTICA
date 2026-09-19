@@ -340,3 +340,22 @@ export function IconRocket({ className }: P) {
     </svg>
   );
 }
+
+export function IconMemory({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M12 2a10 10 0 1 0 10 10" />
+      <path d="M12 6v6l4 2" />
+      <circle cx="12" cy="12" r="2" fill="currentColor" stroke="none" />
+      <path d="M20 4l2 2-2 2" />
+    </svg>
+  );
+}
+
+export function IconPower({ className }: P) {
+  return (
+    <svg viewBox="0 0 24 24" className={className} {...base}>
+      <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" fill="currentColor" stroke="none" />
+    </svg>
+  );
+}
