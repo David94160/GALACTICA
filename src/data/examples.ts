@@ -584,6 +584,26 @@ export const BUSINESS = {
         title: "Raisonnement mathématique",
         desc: "Résolution d'équations, génération de LaTeX, vérification de preuves — pas à pas.",
       },
+      {
+        icon: "chat",
+        title: "Conversations contextuelles",
+        desc: "Discutez avec Sirius en gardant le contexte de toute votre recherche. Mémoire persistante et compréhension profonde.",
+      },
+      {
+        icon: "learn",
+        title: "Apprentissage adaptatif",
+        desc: "Sirius apprend de vos patterns de recherche et crée des parcours d'apprentissage personnalisés pour combler vos lacunes.",
+      },
+      {
+        icon: "ui",
+        title: "Interface scientifique",
+        desc: "Interface intuitive conçue pour les scientifiques. Workflows visuels, tableaux de bord personnalisables, intégrations transparentes.",
+      },
+      {
+        icon: "complex",
+        title: "Systèmes complexes",
+        desc: "Créez et simulez des systèmes scientifiques complexes. Modélisation multi-échelle, analyse de réseaux, simulations haute performance.",
+      },
     ],
   },
 
@@ -748,25 +768,25 @@ export const BUSINESS = {
       name: "Elicit",
       strength: "UX propre, bonne adoption",
       weakness: "Pas de mémoire, juste recherche ponctuelle",
-      sirius: "Mémoire persistante + rédaction assistée",
+      sirius: "Mémoire persistante + conversations contextuelles + apprentissage adaptatif",
     },
     {
       name: "Consensus",
       strength: "Moteur de recherche scientifique",
       weakness: "Pas de compréhension profonde, pas de contexte",
-      sirius: "Puissance de raisonnement + mémoire contextuelle",
+      sirius: "Puissance de raisonnement + mémoire contextuelle + systèmes complexes",
     },
     {
       name: "Scispace",
       strength: "Gratuit, bonne couverture",
       weakness: "Qualité variable, pas de génération, pas de mémoire",
-      sirius: "Qualité scientifique supérieure + mémoire + citations automatiques",
+      sirius: "Qualité scientifique supérieure + mémoire + citations + interface intuitive",
     },
     {
       name: "ChatGPT / Claude",
       strength: "Capacités générales, popularité",
       weakness: "Pas spécialisé scientifique, hallucinations, mémoire limitée",
-      sirius: "Entraîné sur 106B tokens scientifiques, mémoire illimitée, puissance dédiée",
+      sirius: "Entraîné sur 106B tokens scientifiques, mémoire illimitée, puissance dédiée, systèmes complexes",
     },
   ],
 };

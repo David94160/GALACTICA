@@ -5,6 +5,7 @@ import CodeBlock, { CopyButton } from "./components/CodeBlock";
 import ModelScale from "./components/ModelScale";
 import { highlightTokens } from "./components/highlight";
 import { BIBTEX, BUSINESS, DEPLOY_VARIANTS, DOWNLOADS, EXAMPLES, METRICS, QUICKSTART, WIDGET_PROMPTS } from "./data/examples";
+import { useLanguage } from "./hooks/useLanguage";
 import {
   IconAlert,
   IconArrowUpRight,
@@ -13,6 +14,7 @@ import {
   IconBrackets,
   IconBubble,
   IconChart,
+  IconChat,
   IconCode,
   IconCompress,
   IconCpu,
@@ -20,17 +22,22 @@ import {
   IconFace,
   IconFlask,
   IconGem,
+  IconGlobe,
   IconGpu,
   IconHelix,
   IconIBeam,
+  IconLayout,
+  IconLearn,
   IconMemory,
   IconMolecule,
+  IconNetwork,
   IconNodes,
   IconPage,
   IconPlay,
   IconPower,
   IconRadical,
   IconRocket,
+  IconSearch,
   IconShield,
   IconSpark,
   IconTarget,
@@ -62,6 +69,7 @@ const NAV = [
   { id: "deploy", label: "Deploy" },
   { id: "capabilities", label: "Capabilities" },
   { id: "card", label: "Model card" },
+  { id: "ai-features", label: "AI Features" },
   { id: "business", label: "Business plan" },
   { id: "citation", label: "Citation" },
 ];
@@ -163,6 +171,7 @@ export default function App() {
   const [cap, setCap] = useState(EXAMPLES[0].id);
   const [pg, setPg] = useState("latex");
   const [deploy, setDeploy] = useState("gpu");
+  const { lang, toggleLang, t } = useLanguage();
 
   const activeDeploy = DEPLOY_VARIANTS.find((v) => v.id === deploy) ?? DEPLOY_VARIANTS[1];
 
@@ -234,16 +243,25 @@ export default function App() {
               </a>
             ))}
           </nav>
-          <a
-            href="https://github.com/PapersWithCode/galai"
-            target="_blank"
-            rel="noreferrer"
-            className="group inline-flex items-center gap-2 rounded-md border border-ink-600 px-3 py-1.5 font-mono text-xs text-ink-200 transition-all duration-200 hover:border-mint-500/60 hover:text-mint-300 active:scale-95"
-          >
-            <IconCode className="h-4 w-4" />
-            <span className="hidden sm:inline">paperswithcode/galai</span>
-            <IconArrowUpRight className="h-3 w-3 text-ink-500 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mint-300" />
-          </a>
+          <div className="flex items-center gap-3">
+            <button
+              onClick={toggleLang}
+              className="group inline-flex items-center gap-2 rounded-md border border-ink-600 px-3 py-1.5 font-mono text-xs text-ink-200 transition-all duration-200 hover:border-mint-500/60 hover:text-mint-300 active:scale-95"
+            >
+              <IconGlobe className="h-4 w-4" />
+              <span className="font-semibold">{lang === "fr" ? "FR" : "EN"}</span>
+            </button>
+            <a
+              href="https://github.com/PapersWithCode/galai"
+              target="_blank"
+              rel="noreferrer"
+              className="group inline-flex items-center gap-2 rounded-md border border-ink-600 px-3 py-1.5 font-mono text-xs text-ink-200 transition-all duration-200 hover:border-mint-500/60 hover:text-mint-300 active:scale-95"
+            >
+              <IconCode className="h-4 w-4" />
+              <span className="hidden sm:inline">paperswithcode/galai</span>
+              <IconArrowUpRight className="h-3 w-3 text-ink-500 transition-all duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-mint-300" />
+            </a>
+          </div>
         </div>
       </header>
 
@@ -825,11 +843,153 @@ $ pip install transformers accelerate
           </div>
         </section>
 
-        {/* ---------- 07 business plan ---------- */}
-        <section id="business" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
+        {/* ---------- 07 new ai capabilities ---------- */}
+        <section id="ai-features" className="scroll-mt-24 border-t border-ink-800/80">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
             <SectionHead
               no="07"
+              title={t.newFeatures.title}
+              sub={t.newFeatures.subtitle}
+            />
+            <div className="grid gap-6 lg:grid-cols-2 xl:grid-cols-3">
+              {/* Discuter */}
+              <Reveal>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-mint-500/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-mint-400/60 hover:shadow-[0_20px_60px_-20px_rgba(63,224,197,0.3)]">
+                  <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-mint-500/5 blur-3xl transition-all duration-500 group-hover:bg-mint-400/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-mint-500/40 bg-mint-500/10 text-mint-400 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                      <IconChat className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-mint-300">
+                      {t.newFeatures.discuss}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                      {t.newFeatures.discussDesc}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-mint-400">
+                        {lang === "fr" ? "Mémoire persistante" : "Persistent memory"}
+                      </span>
+                      <span className="rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-mint-400">
+                        {lang === "fr" ? "Contexte illimité" : "Unlimited context"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Recherche */}
+              <Reveal delay={100}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-skyx-400/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-skyx-400/60 hover:shadow-[0_20px_60px_-20px_rgba(127,180,255,0.3)]">
+                  <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-skyx-400/5 blur-3xl transition-all duration-500 group-hover:bg-skyx-400/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-skyx-400/40 bg-skyx-400/10 text-skyx-400 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                      <IconSearch className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-skyx-300">
+                      {t.newFeatures.research}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                      {t.newFeatures.researchDesc}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-skyx-400/30 bg-skyx-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-skyx-400">
+                        {lang === "fr" ? "Sémantique" : "Semantic"}
+                      </span>
+                      <span className="rounded-full border border-skyx-400/30 bg-skyx-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-skyx-400">
+                        {lang === "fr" ? "Connexions auto" : "Auto-connections"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Apprendre */}
+              <Reveal delay={200}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-ember-400/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-ember-400/60 hover:shadow-[0_20px_60px_-20px_rgba(255,180,84,0.3)]">
+                  <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-ember-400/5 blur-3xl transition-all duration-500 group-hover:bg-ember-400/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-ember-400/40 bg-ember-400/10 text-ember-400 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                      <IconLearn className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-ember-300">
+                      {t.newFeatures.learn}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                      {t.newFeatures.learnDesc}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-ember-400/30 bg-ember-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ember-400">
+                        {lang === "fr" ? "Adaptatif" : "Adaptive"}
+                      </span>
+                      <span className="rounded-full border border-ember-400/30 bg-ember-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-ember-400">
+                        {lang === "fr" ? "Personnalisé" : "Personalized"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Interface Utilisateur */}
+              <Reveal delay={300}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-viol-400/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-viol-400/60 hover:shadow-[0_20px_60px_-20px_rgba(185,167,255,0.3)]">
+                  <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-viol-400/5 blur-3xl transition-all duration-500 group-hover:bg-viol-400/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-viol-400/40 bg-viol-400/10 text-viol-400 transition-transform duration-500 group-hover:scale-110 group-hover:-rotate-3">
+                      <IconLayout className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-viol-300">
+                      {t.newFeatures.userInterface}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                      {t.newFeatures.userInterfaceDesc}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-viol-400/30 bg-viol-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-viol-400">
+                        {lang === "fr" ? "Intuitive" : "Intuitive"}
+                      </span>
+                      <span className="rounded-full border border-viol-400/30 bg-viol-400/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-viol-400">
+                        {lang === "fr" ? "Workflows visuels" : "Visual workflows"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+
+              {/* Systèmes Complexes */}
+              <Reveal delay={400}>
+                <div className="group relative h-full overflow-hidden rounded-2xl border border-mint-500/30 bg-gradient-to-br from-ink-900 via-ink-850 to-ink-900 p-8 transition-all duration-500 hover:border-mint-400/60 hover:shadow-[0_20px_60px_-20px_rgba(63,224,197,0.3)] lg:col-span-2 xl:col-span-1">
+                  <div className="absolute -right-8 -top-8 h-40 w-40 rounded-full bg-mint-500/5 blur-3xl transition-all duration-500 group-hover:bg-mint-400/10" />
+                  <div className="relative">
+                    <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-2xl border border-mint-500/40 bg-mint-500/10 text-mint-400 transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3">
+                      <IconNetwork className="h-8 w-8" />
+                    </div>
+                    <h3 className="font-display text-2xl font-bold tracking-tight text-mint-300">
+                      {t.newFeatures.complexSystems}
+                    </h3>
+                    <p className="mt-4 text-sm leading-relaxed text-ink-300">
+                      {t.newFeatures.complexSystemsDesc}
+                    </p>
+                    <div className="mt-6 flex flex-wrap gap-2">
+                      <span className="rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-mint-400">
+                        {lang === "fr" ? "Multi-échelle" : "Multi-scale"}
+                      </span>
+                      <span className="rounded-full border border-mint-500/30 bg-mint-500/10 px-3 py-1 font-mono text-[10px] uppercase tracking-wider text-mint-400">
+                        {lang === "fr" ? "Haute performance" : "High-performance"}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+          </div>
+        </section>
+
+        {/* ---------- 08 business plan ---------- */}
+        <section id="business" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
+          <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
+            <SectionHead
+              no="08"
               title="Business Plan"
               sub="Transformer GALACTICA en une plateforme SaaS de recherche scientifique — de la vision stratégique aux projections financières."
             />
@@ -969,7 +1129,7 @@ $ pip install transformers accelerate
                   <IconTarget className="h-6 w-6 text-skyx-400" />
                   Fonctionnalités clés
                 </h3>
-                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                   {BUSINESS.solution.features.map((f, i) => (
                     <div
                       key={f.title}
@@ -983,6 +1143,10 @@ $ pip install transformers accelerate
                         {f.icon === "write" && <IconIBeam className="h-5 w-5" />}
                         {f.icon === "molecule" && <IconMolecule className="h-5 w-5" />}
                         {f.icon === "math" && <IconRadical className="h-5 w-5" />}
+                        {f.icon === "chat" && <IconChat className="h-5 w-5" />}
+                        {f.icon === "learn" && <IconLearn className="h-5 w-5" />}
+                        {f.icon === "ui" && <IconLayout className="h-5 w-5" />}
+                        {f.icon === "complex" && <IconNetwork className="h-5 w-5" />}
                       </div>
                       <h4 className="font-display text-base font-semibold text-ink-100">{f.title}</h4>
                       <p className="mt-2 text-sm leading-relaxed text-ink-400">{f.desc}</p>
@@ -1303,10 +1467,10 @@ $ pip install transformers accelerate
           </div>
         </section>
 
-        {/* ---------- 08 citation ---------- */}
+        {/* ---------- 09 citation ---------- */}
         <section id="citation" className="scroll-mt-24 border-t border-ink-800/80 bg-ink-900/40">
           <div className="mx-auto max-w-7xl px-4 py-20 sm:px-6 sm:py-24 lg:px-8">
-            <SectionHead no="08" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
+            <SectionHead no="09" title="Citation" sub="If Galactica helps your research, cite the paper — BibTeX ready to copy." />
             <div className="grid gap-8 lg:grid-cols-[1fr_1.2fr]">
               <Reveal>
                 <article className="group h-full rounded-xl border border-ink-700 bg-ink-900/85 p-6 transition-all duration-300 hover:-translate-y-1 hover:border-ember-400/40 hover:shadow-[0_24px_60px_-28px_rgba(0,0,0,0.9)] sm:p-8">
@@ -1386,6 +1550,7 @@ $ pip install transformers accelerate
                 <a href="#deploy" className="nav-link transition-colors hover:text-ember-300">deploy</a>
                 <a href="#capabilities" className="nav-link transition-colors hover:text-ember-300">capabilities</a>
                 <a href="#card" className="nav-link transition-colors hover:text-ember-300">model card</a>
+                <a href="#ai-features" className="nav-link transition-colors hover:text-ember-300">AI features</a>
                 <a href="#business" className="nav-link transition-colors hover:text-ember-300">business plan</a>
                 <a href="https://github.com/PapersWithCode/galai" target="_blank" rel="noreferrer" className="nav-link transition-colors hover:text-ember-300">github</a>
                 <a href="#top" className="nav-link transition-colors hover:text-ember-300">back to top ↑</a>
